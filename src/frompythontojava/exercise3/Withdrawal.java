@@ -8,13 +8,33 @@ import java.util.Currency;
  */
 public class Withdrawal extends Transaction {
 
-    public Withdrawal(float amount, Currency currency) {
+    private Account from;
+
+    public Withdrawal(float amount, Currency currency, Account from) {
         super(amount, currency);
+        this.from = from;
     }
 
     @Override
-    Receipt completed() throws Cancelled {
-        return null;
+    protected Receipt completed() throws Cancelled {
+        if (this.from.getBalance() >= this.getAmount()) {
+            try {
+                from.decrease(this.getAmount(), this.getCurrency());
+                Receipt receipt = new Receipt();
+                receipt.addDeatils(this.toString());
+                return receipt;
+            } catch (InvalidCurrency invalidCurrency) {
+                invalidCurrency.printStackTrace();
+            }
+        }
+        throw new Cancelled();
+    }
+
+
+    @Override
+    public String toString() {
+        return String.format("Action: %s\nUser: %s\nWithdrew: %s\nBalance: %s",Withdrawal.class.getSimpleName(), from.getAccountNumber(),
+                this.getAmount(), from.getBalance());
     }
 
 }

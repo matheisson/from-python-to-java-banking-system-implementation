@@ -18,10 +18,19 @@ abstract class Transaction {
         this.currency = currency;
     }
 
-    abstract Receipt completed() throws Cancelled;
-
-    public String toString() {
-        return "| ID: " + this.id + ", Amount: " + this.amount + ", Currency: " + this.currency+" | ";
+    public float getAmount() {
+        return amount;
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    abstract protected Receipt completed() throws Cancelled;
+
+    abstract public String toString();
+
+    public UUID getId() {
+        return id;
+    }
 }

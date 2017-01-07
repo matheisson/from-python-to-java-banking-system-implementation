@@ -1,5 +1,6 @@
 package frompythontojava.exercise3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,15 +10,17 @@ public class Receipt {
 
     private List<String> details;
 
+    public Receipt(){this.details = new ArrayList<>();}
+
     public void addDeatils(String details) {
         this.details.add(details);
     }
     
     public String toString() {
-        System.out.println("Following details been found:");
+        System.out.println("<-R-E-C-E-I-P-T->\nFollowing details been found:\n");
         for (String detail: this.details) {
-            System.out.println(detail);
+            System.out.println(detail+"\n");
         }
-        return "Details ended";
+        return "Details ended\n<>---------<>";
     }
 }

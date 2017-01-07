@@ -16,21 +16,24 @@ public class Account {
         this.user = user;
         this.accountNumber = accountNumber;
         this.currency = currency;
+        this.balance = 0;
     }
 
     // INCREASE
     public boolean increase(float amount, Currency currency) throws InvalidCurrency{
         if (this.currency != currency){
-            return false;
+            throw new InvalidCurrency();
         }
+        this.balance += amount;
         return true;
     }
 
     // DECREASE
     public boolean decrease(float amount, Currency currency) throws InvalidCurrency{
-        if (this.currency.getCurrencyCode() != currency.getCurrencyCode()){
-            return false;
+        if (this.currency != currency) {
+            throw new InvalidCurrency();
         }
+        this.balance -= amount;
         return true;
     }
 
@@ -51,6 +54,6 @@ public class Account {
     }
 
     public String toString() {
-        return "User: " + this.user.getId() + ", Account Number: " + this.accountNumber;
+        return "User: " + this.user.getId() + ", Account Number: " + this.getAccountNumber()+" balance: "+this.getBalance();
     }
 }
